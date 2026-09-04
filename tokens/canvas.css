@@ -1,0 +1,135 @@
+/* IDE.IA — Canvas, espaçamento e forma
+   ---------------------------------------------------------------------------
+   O slide é 16:9, de largura fluida, e serve de container de consulta. Tudo
+   dentro dele mede em `cqw`, então o layout inteiro escala junto: margem,
+   espaçamento e tipografia crescem na mesma proporção. É isso que garante que o
+   slide projetado seja idêntico ao da miniatura.
+
+   Estrutura obrigatória — dois níveis:
+
+     <section class="slide">               ← o container, SEM padding
+       <div class="area l-capa"> … </div>  ← a margem do slide vive aqui
+       <img class="marca" …>               ← sangrados ficam fora da área
+     </section>
+
+   O padding fica na `.area`, nunca na `.slide`. Motivo: `cqw` resolve contra a
+   caixa de conteúdo do container, então padding em `cqw` na própria `.slide` é
+   circular — o navegador devolve um valor diferente do que você escreveu, e
+   layouts com padding distinto acabam com escalas de texto distintas. Com o
+   padding na `.area`, a base de `cqw` é sempre a largura cheia do slide. */
+
+:root {
+  /* Espaçamento — px @ 1920 (fallback sem container queries) */
+  --s1:   8px;
+  --s2:  16px;
+  --s3:  24px;
+  --s4:  32px;
+  --s5:  48px;
+  --s6:  64px;
+  --s7:  96px;
+  --s8: 128px;
+
+  --pad-x: 120px;   /* margem lateral do slide */
+  --pad-y:  90px;   /* margem superior/inferior */
+
+  /* Forma. Claro = quina viva em tudo. Redondo só em cartão do modo escuro e em
+     badge de ícone. Sem sombra no modo claro. */
+  --radius-none:       0px;
+  --radius-icon-badge: 50%;
+  --radius-card-dark:  20px;
+
+  --rule-thick: 6px;   /* barra menta de destaque sob um título */
+  --hairline:   1px;
+
+  --icon-stroke-width:      3px;   /* conjunto claro */
+  --icon-stroke-width-dark: 6px;   /* conjunto escuro, mais grosso */
+}
+
+/* --- Pilha de slides ------------------------------------------------------ */
+
+.deck {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  background: var(--gray-200);
+  padding: 24px;
+  box-sizing: border-box;
+}
+
+/* --- O slide -------------------------------------------------------------- */
+
+.slide {
+  container-type: inline-size;
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  background: var(--surface-page);
+  color: var(--text-body);
+  font-family: var(--font-brand);
+  font-size: var(--t-body);
+  line-height: var(--lh-body);
+}
+
+/* Sobrescritas em cqw. Se o navegador não entender `cqw`, estas declarações são
+   descartadas e valem os px de :root, calibrados para o canvas 1920. */
+.slide {
+  --s1:  0.42cqw;
+  --s2:  0.83cqw;
+  --s3:  1.25cqw;
+  --s4:  1.67cqw;
+  --s5:  2.50cqw;
+  --s6:  3.33cqw;
+  --s7:  5.00cqw;
+  --s8:  6.67cqw;
+
+  --pad-x: 6.25cqw;
+  --pad-y: 4.70cqw;
+
+  --t-display: 7.00cqw;
+  --t-title:   3.02cqw;
+  --t-lead:    2.55cqw;
+  --t-prosa:   2.50cqw;
+  --t-body:    1.90cqw;
+  --t-caption: 1.35cqw;
+  --t-eyebrow: 4.80cqw;
+  --t-kicker:  1.75cqw;
+  --t-metric: 18.00cqw;
+  --t-ghost:   7.00cqw;
+
+  --rule-thick: 0.31cqw;
+  --hairline:   0.06cqw;
+  --radius-card-dark: 1.04cqw;
+}
+
+/* A área útil: o slide inteiro menos as margens da marca.
+   Só os layouts com logo (capa, divisória, encerramento) reservam a faixa dele
+   no padding de baixo; ver layouts.css. Os slides de miolo não têm logo e usam
+   a altura inteira. */
+.area {
+  position: absolute;
+  inset: 0;
+  box-sizing: border-box;
+  padding: var(--pad-y) var(--pad-x);
+  display: flex;
+  flex-direction: column;
+  /* Justificação em todo o slide. A hifenização anda junto: sem ela o PT-BR
+     abre vãos enormes entre as palavras. Depende de <html lang="pt-BR"> no
+     documento — sem o `lang` o navegador não carrega o dicionário. */
+  text-align: justify;
+  hyphens: auto;
+  hyphenate-limit-chars: 6 3 3;
+  text-wrap: pretty;
+}
+
+/* Modo escuro — navy, texto claro, cartões arredondados */
+.slide.dark {
+  background: var(--surface-dark);
+  color: var(--text-body-inverse);
+}
+
+/* Divisória — banda menta cheia */
+.slide.accent {
+  background: var(--surface-accent);
+  color: var(--black);
+}

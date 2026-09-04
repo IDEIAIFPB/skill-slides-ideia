@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>IDE.IA — Deck de exemplo</title>
+
+<!-- Fonte do build. O deck final é gerado por build/build-template.py. -->
+<!--CSS-->
+
+<style>
+  /* Só o enquadramento desta página de exemplo. Nada aqui é regra de marca. */
+  body { margin: 0; background: var(--gray-200); }
+  .deck { max-width: 1280px; margin: 0 auto; }
+</style>
+</head>
+<body>
+<div class="deck">
+
+  <!-- 0 · ABERTURA — só a marca, antes de tudo -------------------------- -->
+  <section class="slide dark">
+    <div class="area l-abertura">
+      <img class="logo-central" src="../assets/logo/ideia-logo-full-white.png" alt="IDE.IA">
+    </div>
+  </section>
+
+  <!-- 1 · CAPA ----------------------------------------------------------- -->
+  <section class="slide">
+    <div class="area l-capa">
+      <p class="eyebrow">Laboratório</p>
+      <div class="bloco-titulo">
+        <h1 class="display">Detecção de anomalias em séries temporais</h1>
+        <hr class="regua">
+        <p class="legenda">Time de Pesquisa · Março de 2026</p>
+      </div>
+    </div>
+    <img class="padrao" src="../assets/patterns/network-outline-large.png" alt="">
+    <img class="marca" src="../assets/logo/ideia-logo-full.png" alt="IDE.IA">
+  </section>
+
+  <!-- 2 · DIVISÓRIA ------------------------------------------------------ -->
+  <section class="slide accent">
+    <div class="area l-divisoria">
+      <p class="num">01</p>
+      <h2 class="titulo">Contexto</h2>
+    </div>
+    <img class="marca" src="../assets/logo/ideia-logo-full.png" alt="IDE.IA">
+  </section>
+
+  <!-- 3 · TÍTULO + TEXTO, versão bullets ---------------------------------- -->
+  <section class="slide">
+    <div class="area l-titulo-texto">
+      <div>
+        <p class="eyebrow">Problema</p>
+        <h2 class="titulo">Alertas demais, sinal de menos</h2>
+        <hr class="regua">
+      </div>
+      <ul class="bullets">
+        <li>O sistema atual dispara 400 alertas por dia</li>
+        <li>Nove em cada dez são descartados sem análise</li>
+        <li>Falhas reais chegam com quatro horas de atraso</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- 4 · DADO ------------------------------------------------------------ -->
+  <section class="slide">
+    <div class="area l-dado">
+      <p class="eyebrow">Linha de base</p>
+      <div class="bloco-metrica">
+        <p class="metrica">9%</p>
+        <p class="rotulo">dos alertas são acionáveis</p>
+        <p class="contexto">Amostra de 12 mil alertas classificados manualmente pela equipe de operação.</p>
+      </div>
+      <p class="legenda">Fonte: auditoria interna, jan/2026</p>
+    </div>
+  </section>
+
+  <!-- 5 · DIVISÓRIA ------------------------------------------------------ -->
+  <section class="slide accent">
+    <div class="area l-divisoria">
+      <p class="num">02</p>
+      <h2 class="titulo">Método</h2>
+    </div>
+    <img class="marca" src="../assets/logo/ideia-logo-full.png" alt="IDE.IA">
+  </section>
+
+  <!-- 6 · TRÊS CARTÕES — sequência real, por isso o algarismo fantasma ---- -->
+  <section class="slide">
+    <div class="area l-cartoes">
+      <h2 class="titulo">Três etapas</h2>
+      <div class="grade-cartoes">
+        <article class="cartao">
+          <span class="numero-fantasma">01</span>
+          <img class="icone" src="../assets/icons/icon-data-pipeline.svg" alt="">
+          <h3>Coletar</h3>
+          <p>Séries brutas dos sensores, sem agregação prévia.</p>
+        </article>
+        <article class="cartao">
+          <span class="numero-fantasma">02</span>
+          <img class="icone" src="../assets/icons/icon-analytics.svg" alt="">
+          <h3>Modelar</h3>
+          <p>Baseline sazonal por sensor, com janela móvel de 30 dias.</p>
+        </article>
+        <article class="cartao">
+          <span class="numero-fantasma">03</span>
+          <img class="icone" src="../assets/icons/icon-checklist.svg" alt="">
+          <h3>Validar</h3>
+          <p>Revisão cega por três anotadores independentes.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- 7 · IMAGEM + TEXTO -------------------------------------------------- -->
+  <section class="slide">
+    <div class="area l-imagem">
+      <img class="figura" src="../assets/illustrations/landscape-placeholder.jpeg"
+           alt="Estação de medição em campo">
+      <div class="texto">
+        <p class="eyebrow">Campo</p>
+        <h2 class="titulo">Onde os dados nascem</h2>
+        <p class="corpo">Doze estações em operação contínua desde 2024, com amostragem a cada cinco minutos.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 8 · COMPARAÇÃO, modo escuro ----------------------------------------- -->
+  <section class="slide dark">
+    <div class="area l-comparacao">
+      <h2 class="titulo">Comparação de abordagens</h2>
+      <table class="tabela">
+        <tr><th>Critério</th><th>Limiar fixo</th><th>Sazonal</th><th>Autoencoder</th></tr>
+        <tr><td>Precisão</td><td>Baixa</td><td class="destaque">Alta</td><td>Alta</td></tr>
+        <tr><td>Custo</td><td class="destaque">Mínimo</td><td>Baixo</td><td>Alto</td></tr>
+        <tr><td>Explicabilidade</td><td>Alta</td><td class="destaque">Alta</td><td>Baixa</td></tr>
+        <tr><td>Manutenção</td><td>Manual</td><td class="destaque">Automática</td><td>Automática</td></tr>
+      </table>
+    </div>
+  </section>
+
+  <!-- 9 · TÍTULO + TEXTO, versão parágrafo -------------------------------- -->
+  <section class="slide">
+    <div class="area l-titulo-texto">
+      <div>
+        <p class="eyebrow">Resultado</p>
+        <h2 class="titulo">O baseline sazonal venceu</h2>
+        <hr class="regua">
+      </div>
+      <p class="corpo">Com um terço do custo do autoencoder e a explicabilidade preservada, o modelo sazonal reduziu o volume de alertas em 78% sem perder nenhuma falha crítica conhecida.</p>
+    </div>
+  </section>
+
+  <!-- 10 · ENCERRAMENTO ---------------------------------------------------- -->
+  <section class="slide dark">
+    <div class="area l-encerramento">
+      <h2 class="display">Obrigada!</h2>
+      <div class="contatos">
+        <span>@ide.ia_</span>
+        <span>IDE.IA</span>
+      </div>
+    </div>
+    <img class="padrao" src="../assets/patterns/network-outline-large.png" alt="">
+    <img class="marca" src="../assets/logo/ideia-logo-full.png" alt="IDE.IA">
+  </section>
+
+</div>
+</body>
+</html>

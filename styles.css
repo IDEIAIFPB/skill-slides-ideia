@@ -1,0 +1,9 @@
+/* IDE.IA — ponto de entrada único.
+   Um só import em qualquer deck:  <link rel="stylesheet" href="styles.css">
+   A ordem importa: cores e tipografia definem os tokens, canvas monta o slide
+   e o container de consulta, layouts consomem os dois. */
+
+@import "tokens/colors.css";
+@import "tokens/typography.css";
+@import "tokens/canvas.css";
+@import "layouts.css";

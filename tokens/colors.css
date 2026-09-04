@@ -1,0 +1,46 @@
+/* IDE.IA — Cores
+   Dois verdes + preto/branco/navy. Nenhuma outra matiz, nenhum gradiente.
+   Os cinzas são neutros derivados, só para texto secundário e fios. */
+
+:root {
+  /* Paleta base */
+  --green-600: #3FA14C;   /* verde folha — marca, títulos de destaque, ícones (modo claro) */
+  --green-400: #80E978;   /* menta — grandes preenchimentos, divisórias, badges, destaque no escuro */
+  --green-200: #B7EFB2;   /* tinta clara — derivada, preenchimentos sutis */
+  --green-100: #E7F9E5;   /* tinta mínima — derivada, superfícies de fio */
+
+  --black:    #000000;
+  --white:    #FFFFFF;
+  --gray-900: #1A1A1A;    /* corpo de texto sobre branco */
+  --gray-600: #5C5C5C;    /* legenda / texto secundário */
+  --gray-200: #E3E3E3;    /* fio / borda */
+
+  --navy-900: #111A24;    /* fundo do modo escuro */
+  --navy-800: #182430;    /* painel de cartão sobre navy */
+  --green-legend-dark: #1B4220;  /* verde escuro — célula destacada em tabela */
+
+  /* Papéis semânticos — prefira estes nos slides */
+  --surface-page:      var(--white);
+  --surface-accent:    var(--green-400);
+  --surface-dark:      var(--navy-900);
+  --surface-dark-card: var(--navy-900);  /* cartão no mesmo tom do fundo — separado por fio */
+  --surface-dark-header: var(--navy-800); /* cabeçalho de tabela, um tom acima */
+
+  --text-heading:         var(--black);
+  --text-heading-inverse: var(--white);
+  --text-body:            var(--gray-900);
+  --text-body-inverse:    rgba(255, 255, 255, 0.92);
+  --text-caption:         var(--gray-600);
+  --text-brand:           var(--green-600);
+  --text-brand-on-dark:   var(--green-400);
+
+  --border-hairline: var(--gray-200);
+  --border-hairline-dark: rgba(128, 233, 120, 0.22);  /* fio de cartão sobre navy */
+  --icon-stroke:     var(--green-600);
+
+  /* Número fantasma — o algarismo gigante e apagado atrás de um cartão de sequência */
+  --ghost-number: rgba(128, 233, 120, 0.28);
+}
+
+/* Contraste: menta (--green-400) é preenchimento, nunca texto sobre branco.
+   Corpo de texto = --text-body sobre claro, --text-body-inverse sobre navy. */

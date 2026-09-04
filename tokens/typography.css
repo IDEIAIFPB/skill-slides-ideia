@@ -1,0 +1,56 @@
+/* IDE.IA — Tipografia para slides
+   ---------------------------------------------------------------------------
+   UMA face: Urbanist. O contraste vem de peso, tamanho e caixa — não de trocar
+   de família. Não existe segunda fonte de corpo, nem fonte substituta.
+
+   A escala é ancorada no canvas de referência 1920×1080 e expressa em `cqw`
+   (1cqw = 1% da largura do slide = 19,2px em 1920). Por isso o texto mantém o
+   mesmo tamanho relativo em qualquer largura de renderização — miniatura,
+   artifact ou projeção. Nunca use `vw` aqui: `vw` mede a janela, não o slide,
+   e é o que faz o título encolher dentro de um preview estreito.
+
+   Os valores em `:root` são o fallback em px para o canvas 1920, usados quando
+   o navegador não suporta container queries. As sobrescritas em cqw ficam em
+   `.slide` (ver canvas.css). */
+
+@import url('https://fonts.googleapis.com/css2?family=Urbanist:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,700&display=swap');
+
+:root {
+  /* A cadeia de fallback termina em faces geométricas de x-height alto, próximas
+     da Urbanist. Nunca deixe cair direto em -apple-system: a diferença de cor
+     e largura é visível e é o que faz o slide parecer "fonte errada". */
+  --font-brand: 'Urbanist', 'Poppins', 'Nunito Sans', 'Segoe UI', system-ui, sans-serif;
+
+  /* Escala — px @ 1920 (fallback) */
+  --t-display: 134px;   /* capa e frases-tese; uma por deck, no máximo duas */
+  --t-title:    58px;   /* título de slide */
+  --t-lead:     49px;   /* linha de apoio sob o título, citação curta */
+  --t-prosa:    48px;   /* prosa e bullets em coluna única de largura cheia */
+  --t-body:     36px;   /* corpo, bullets, texto de cartão */
+  --t-caption:  26px;   /* legenda, fonte de dado, rodapé — PISO ABSOLUTO */
+  --t-eyebrow:  92px;   /* rótulo de seção — é o TÍTULO do slide */
+  --t-kicker:   34px;   /* sobrelinha discreta — só na capa, sob o display */
+  --t-metric:  346px;   /* o número único do slide de dado */
+  --t-ghost:   134px;   /* algarismo fantasma de sequência (01/02/03) */
+
+  /* Pesos */
+  --w-display: 800;
+  --w-title:   600;   /* subtítulo: abaixo do rótulo de seção, que é 800 */
+  --w-lead:    500;
+  --w-body:    400;
+  --w-eyebrow: 700;
+
+  /* Entrelinha — quanto maior o texto, mais apertado */
+  --lh-display: 1.02;
+  --lh-title:   1.08;
+  --lh-lead:    1.25;
+  --lh-body:    1.45;
+
+  /* Tracking — Urbanist é geométrica e de x-height alto: em tamanho display ela
+     abre demais sem tracking negativo, e é isso que faz um título grande parecer
+     frouxo. Em caixa alta pequena vale o contrário. */
+  --tr-display: -0.02em;
+  --tr-title:   -0.015em;
+  --tr-body:     0;
+  --tr-eyebrow:  0.14em;
+}

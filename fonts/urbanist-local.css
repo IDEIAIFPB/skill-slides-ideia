@@ -1,0 +1,25 @@
+/* IDE.IA — Urbanist a partir dos arquivos locais (opcional)
+   ---------------------------------------------------------------------------
+   O caminho padrão da skill carrega a Urbanist do Google Fonts, dentro de
+   tokens/typography.css. Isso funciona em artifact, em HTML avulso e em
+   qualquer navegador com rede.
+
+   Use ESTE arquivo apenas quando o deck precisar rodar sem rede, ou quando for
+   virar PDF/PPTX num ambiente offline. Importe DEPOIS de styles.css:
+
+     <link rel="stylesheet" href="styles.css">
+     <link rel="stylesheet" href="fonts/urbanist-local.css">
+
+   Atenção ao caminho: os `src` abaixo são relativos a ESTE arquivo. Se você
+   copiar o CSS para outro lugar sem levar os .ttf junto, a fonte falha em
+   silêncio e o deck cai no fallback — que é exatamente o sintoma de "a fonte
+   está errada". Leve a pasta inteira ou fique no caminho do Google Fonts. */
+
+@font-face { font-family:'Urbanist'; font-weight:400; font-style:normal;  font-display:swap; src:url('./Urbanist-Regular.ttf')        format('truetype'); }
+@font-face { font-family:'Urbanist'; font-weight:400; font-style:italic;  font-display:swap; src:url('./Urbanist-Italic.ttf')         format('truetype'); }
+@font-face { font-family:'Urbanist'; font-weight:500; font-style:normal;  font-display:swap; src:url('./Urbanist-Medium.ttf')         format('truetype'); }
+@font-face { font-family:'Urbanist'; font-weight:600; font-style:normal;  font-display:swap; src:url('./Urbanist-SemiBold.ttf')       format('truetype'); }
+@font-face { font-family:'Urbanist'; font-weight:700; font-style:normal;  font-display:swap; src:url('./Urbanist-Bold.ttf')           format('truetype'); }
+@font-face { font-family:'Urbanist'; font-weight:700; font-style:italic;  font-display:swap; src:url('./Urbanist-BoldItalic.ttf')     format('truetype'); }
+@font-face { font-family:'Urbanist'; font-weight:800; font-style:normal;  font-display:swap; src:url('./Urbanist-ExtraBold.ttf')      format('truetype'); }
+@font-face { font-family:'Urbanist'; font-weight:900; font-style:normal;  font-display:swap; src:url('./Urbanist-Black.ttf')          format('truetype'); }

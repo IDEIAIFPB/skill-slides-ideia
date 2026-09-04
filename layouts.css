@@ -1,0 +1,334 @@
+/* IDE.IA — Layouts de slide
+   ---------------------------------------------------------------------------
+   Oito layouts. A classe do layout vai na `.area`; o modo (`dark`, `accent`)
+   vai na `.slide`. Cada layout tem um número fixo de espaços, e é esse limite —
+   não a boa vontade de quem escreve — que impede o slide de acumular
+   informação. Quando o conteúdo não cabe nos espaços, ele vira outro slide.
+   Os limites de palavras estão em references/layouts.md. */
+
+/* --- Elementos compartilhados --------------------------------------------- */
+
+/* O rótulo de seção é o título do slide: é ele que diz do que o slide trata.
+   A frase abaixo desenvolve o rótulo, então entra como subtítulo, menor. */
+.eyebrow {
+  font-size: var(--t-eyebrow);
+  font-weight: 800;
+  /* Caixa de frase, como todo título da marca. Tracking negativo porque em
+     caixa baixa e tamanho grande a Urbanist abre demais — o oposto do que a
+     caixa alta pedia. */
+  letter-spacing: var(--tr-title);
+  line-height: 1.05;
+  color: var(--text-brand);
+  margin: 0;
+}
+/* Exceção: na capa e no encerramento quem manda é o `display`, então a
+   sobrelinha volta ao tamanho discreto de kicker. */
+.l-capa .eyebrow, .l-encerramento .eyebrow {
+  font-size: var(--t-kicker);
+  font-weight: var(--w-eyebrow);
+  letter-spacing: var(--tr-eyebrow);
+  text-transform: uppercase;   /* aqui é rótulo pequeno, não título */
+}
+.dark .eyebrow   { color: var(--text-brand-on-dark); }
+.accent .eyebrow { color: var(--black); }
+
+.display {
+  font-size: var(--t-display);
+  font-weight: var(--w-display);
+  line-height: var(--lh-display);
+  letter-spacing: var(--tr-display);
+  color: var(--text-heading);
+  margin: 0;
+}
+
+.titulo {
+  font-size: var(--t-title);
+  font-weight: var(--w-title);
+  line-height: var(--lh-title);
+  letter-spacing: var(--tr-title);
+  color: var(--text-heading);
+  margin: 0;
+}
+.dark .display, .dark .titulo { color: var(--text-heading-inverse); }
+
+.lead {
+  font-size: var(--t-lead);
+  font-weight: var(--w-lead);
+  line-height: var(--lh-lead);
+  margin: 0;
+}
+
+.regua {                       /* barra menta sob um título — assinatura da marca */
+  width: 100%;
+  max-width: 18cqw;
+  height: var(--rule-thick);
+  background: var(--green-400);
+  border: 0;
+  margin: var(--s3) 0 0;
+}
+
+.legenda {
+  font-size: var(--t-caption);
+  color: var(--text-caption);
+  margin: 0;
+}
+.dark .legenda { color: rgba(255, 255, 255, 0.62); }
+
+.corpo {
+  font-size: var(--t-body);
+  line-height: var(--lh-body);
+  margin: 0;
+  text-align: justify;
+  /* A hifenização é obrigatória junto da justificação: sem ela, o PT-BR abre
+     vãos enormes entre palavras. Depende de <html lang="pt-BR"> no documento —
+     sem o lang correto o navegador não carrega o dicionário e a justificação
+     fica feia. */
+  hyphens: auto;
+  hyphenate-limit-chars: 6 3 3;
+  text-wrap: pretty;
+}
+
+.bullets {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: var(--s3);
+}
+.bullets li {
+  position: relative;
+  padding-left: var(--s5);
+  font-size: var(--t-body);
+  line-height: var(--lh-body);
+}
+.bullets li::before {          /* marcador quadrado em verde folha, nunca disco */
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.55em;
+  width: 0.9cqw;
+  height: 0.9cqw;
+  background: var(--green-600);
+}
+.dark .bullets li::before { background: var(--green-400); }
+
+/* Sangrados — filhos diretos da .slide, fora da .area */
+
+.marca {                       /* logo corrente, sempre no mesmo canto */
+  position: absolute;
+  right: var(--pad-x);
+  bottom: var(--pad-y);
+  height: 4.6cqw;              /* ~88px @1920 */
+  width: auto;
+  display: none;               /* escondido por padrão — ver regra abaixo */
+}
+/* O logo aparece só onde é assinatura: primeiro slide, divisórias de bloco e
+   último slide. A regra é por layout, então um logo colocado por engano num
+   slide de miolo simplesmente não renderiza — não depende de ninguém lembrar. */
+.l-capa ~ .marca,
+.l-divisoria ~ .marca,
+.l-encerramento ~ .marca { display: block; }
+
+/* Troca automática no modo escuro. O HTML aponta sempre para o logo padrão; a
+   versão branca entra sozinha, para não depender de alguém lembrar de trocar o
+   `src`. O caminho é relativo a ESTE arquivo, não ao HTML. */
+.dark .marca { content: url("assets/logo/ideia-logo-full-white.png"); }
+
+.padrao {                      /* padrão de rede sangrando por um canto */
+  position: absolute;
+  pointer-events: none;
+  width: 55cqw;
+  right: -12cqw;
+  bottom: -14cqw;
+  opacity: 0.5;
+}
+.dark .padrao { opacity: 0.22; }
+/* No encerramento o padrão é protagonista, como na capa: maior e mais presente. */
+.l-encerramento ~ .padrao { width: 72cqw; right: -10cqw; bottom: -22cqw; opacity: 0.45; }
+
+.numero-fantasma {             /* algarismo gigante e apagado — só em sequência real */
+  position: absolute;
+  top: 0;
+  right: var(--s3);
+  font-size: var(--t-ghost);
+  font-weight: 900;
+  line-height: 1;
+  color: var(--ghost-number);
+  user-select: none;
+}
+
+/* Reserva extra embaixo nos layouts em que o logo aparece em tamanho cheio. */
+.l-capa, .l-divisoria { padding-bottom: calc(var(--pad-y) + 6cqw); }
+
+/* --- 0. Abertura ---------------------------------------------------------- */
+/* Só o logo, centrado, em fundo escuro. Vem antes da capa e não leva texto
+   nenhum — é a marca sozinha, antes de a apresentação começar. */
+.l-abertura { justify-content: center; align-items: center; }
+.l-abertura .logo-central { width: 42cqw; height: auto; display: block; }
+
+/* --- 1. Capa -------------------------------------------------------------- */
+/* Espaços: sobrelinha · título display · régua · legenda opcional */
+.l-capa          { justify-content: space-between; }
+.l-capa .display { max-width: 100%; }
+.l-capa .bloco-titulo { display: flex; flex-direction: column; }
+.l-capa .legenda { margin-top: var(--s5); }
+
+/* --- 2. Divisória --------------------------------------------------------- */
+/* Espaços: número da seção · título. Nada mais entra aqui. */
+.l-divisoria {
+  justify-content: center;
+  align-items: center;
+  text-align: center;           /* único layout centrado — é o respiro do deck */
+  gap: var(--s5);
+}
+.l-divisoria .num    { font-size: var(--t-lead); font-weight: 800; letter-spacing: var(--tr-eyebrow); margin: 0; }
+.l-divisoria .titulo { font-size: var(--t-display); font-weight: var(--w-display); max-width: 100%; }
+
+/* --- 3. Título + texto ---------------------------------------------------- */
+/* Espaços: sobrelinha · título · régua · UM bloco (parágrafo OU até 3 bullets) */
+/* Coluna única, hierarquia empilhada, largura cheia. O corpo sobe para
+   --t-prosa: numa coluna de largura inteira, texto em tamanho de parágrafo não
+   preenche a altura e o slide volta a parecer vazio. */
+.l-titulo-texto        { justify-content: center; gap: var(--s7); }
+/* O parágrafo fica logo abaixo do título, em altura natural: o bloco inteiro é
+   que se centra. Deixá-lo esticar abria um buraco entre a régua e o texto. */
+.l-titulo-texto .corpo { font-size: var(--t-prosa); }
+.l-titulo-texto .bullets {
+  flex: 1;
+  justify-content: space-evenly;
+  gap: var(--s5);
+}
+.l-titulo-texto .bullets li {
+  font-size: var(--t-prosa);
+  padding-left: var(--s7);
+  text-align: justify;
+  hyphens: auto;
+}
+.l-titulo-texto .bullets li::before { width: 1.4cqw; height: 1.4cqw; top: 0.5em; }
+
+/* --- 4. Três cartões ------------------------------------------------------ */
+/* Espaços: título · exatamente três cartões. Dois ou quatro não são este layout. */
+.l-cartoes     { justify-content: center; gap: var(--s7); }
+.grade-cartoes {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--s7);               /* 96px @1920 — 48px deixava as colunas coladas */
+  flex: 1;
+  align-items: stretch;         /* todos os cartões com a mesma altura */
+  grid-template-rows: auto auto 1fr;   /* faixas: ícone · título · texto */
+}
+/* `subgrid` faz cada cartão herdar as faixas da grade-mãe. Sem isso os cartões
+   até ficam da mesma altura, mas cada um calcula as próprias faixas: um título
+   de duas linhas empurra só o texto daquele cartão e os três desalinham. */
+.cartao {
+  position: relative;
+  padding: 0;
+  display: grid;
+  grid-row: span 3;
+  grid-template-rows: subgrid;
+  border-radius: var(--radius-none);
+}
+.cartao .icone { width: 6.5cqw; height: 6.5cqw; margin-bottom: var(--s4); display: block; }
+.cartao h3     { font-size: 3.2cqw; font-weight: 800; letter-spacing: var(--tr-title); margin: 0 0 var(--s4); color: var(--text-heading); }
+/* Coluna de cartão é estreita demais para justificar: sobram 4 ou 5 palavras
+   por linha, os vãos explodem e a hifenização quebra palavra no meio. O
+   alinhamento à esquerda também devolve a folga natural entre as colunas — sem
+   o rag, dois blocos de texto batem um no outro. Declarado aqui de propósito,
+   para vencer um `class="corpo"` aplicado por engano. */
+.cartao p {
+  font-size: var(--t-lead);
+  margin: 0;
+  align-self: start;
+  text-align: left;
+  hyphens: manual;
+}
+/* O cartão sai em tipo grande de propósito: com texto em tamanho de corpo ele
+   não preenche a altura do slide e abre um vão morto entre o título e o texto.
+   A faixa compartilhada mantém os três alinhados no topo. */
+.dark .cartao {
+  padding: var(--s5);
+  background: var(--surface-dark-card);
+  border: var(--hairline) solid var(--border-hairline-dark);
+  border-radius: var(--radius-card-dark);
+}
+.dark .cartao h3 { color: var(--text-brand-on-dark); }
+
+/* --- 5. Dado -------------------------------------------------------------- */
+/* Espaços: um número · um rótulo · uma frase de contexto · fonte */
+/* A sobrelinha rotula o número, então precisa ficar colada nele. Com
+   space-between ela era empurrada para o topo do slide e ficava órfã, a 250px
+   do dado que nomeia. Aqui o grupo sobrelinha + número centra junto e a fonte
+   ancora no rodapé. */
+.l-dado { justify-content: center; }
+.l-dado .legenda {
+  position: absolute;
+  left: var(--pad-x);
+  bottom: var(--pad-y);
+}
+.l-dado .bloco-metrica { display: flex; flex-direction: column; }
+.l-dado .apoio { display: flex; flex-direction: column; gap: var(--s4); }
+.l-dado .metrica {
+  font-size: var(--t-metric);
+  font-weight: 900;
+  line-height: 0.9;
+  letter-spacing: -0.03em;
+  color: var(--text-brand);
+  margin: var(--s3) 0 0;
+}
+.dark .l-dado .metrica { color: var(--text-brand-on-dark); }
+.l-dado .rotulo   { font-size: var(--t-title); font-weight: var(--w-title); letter-spacing: var(--tr-title); margin: var(--s2) 0 0; }
+.l-dado .contexto { font-size: var(--t-prosa); margin: var(--s4) 0 0; text-align: justify; hyphens: auto; }
+
+
+/* --- 6. Comparação -------------------------------------------------------- */
+/* Espaços: título · tabela de no máximo 4 colunas × 6 linhas */
+.l-comparacao { justify-content: flex-start; gap: var(--s6); }
+.l-comparacao .tabela { flex: 1; }
+.tabela {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0.12cqw;
+  font-size: var(--t-body);
+}
+.tabela th, .tabela td { padding: var(--s3) var(--s4); text-align: left; }
+.tabela th          { background: var(--surface-dark-header); color: var(--text-brand-on-dark); font-weight: 700; }
+.tabela td          { background: rgba(255, 255, 255, 0.04); }
+.tabela td.destaque { background: var(--green-legend-dark); color: var(--white); }
+
+/* --- 7. Imagem + texto ---------------------------------------------------- */
+/* Espaços: uma imagem sangrada · sobrelinha · título · um parágrafo curto */
+.l-imagem {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: stretch;
+  padding: 0;                  /* a figura sangra até a borda do slide */
+}
+.l-imagem .figura { height: 100%; width: 100%; object-fit: cover; display: block; }
+.l-imagem .texto {
+  align-self: center;
+  padding: var(--pad-y) var(--pad-x);
+  display: flex;
+  flex-direction: column;
+  gap: var(--s3);
+}
+
+/* --- 8. Encerramento ------------------------------------------------------ */
+/* Espaços: agradecimento · até três linhas de contato */
+/* Encerramento: logo no alto à esquerda, agradecimento e contatos ancorados
+   embaixo, padrão de rede sangrando pela direita. */
+.l-encerramento { justify-content: flex-end; align-items: flex-start; }
+.l-encerramento .contatos {
+  margin: var(--s4) 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--s2);
+  font-size: var(--t-lead);
+}
+/* Aqui o logo troca de canto: sobe para o alto à esquerda. */
+.l-encerramento ~ .marca {
+  top: var(--pad-y);
+  left: var(--pad-x);
+  right: auto;
+  bottom: auto;
+}
